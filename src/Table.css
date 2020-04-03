@@ -1,7 +1,27 @@
-th, td, tr {
-    margin: 0;
-    padding: 0;
-    border: 1px solid black;
+
+.tableContainer {
+    margin: 0 auto;
+    width: 50%
+}
+
+table {
+    text-align: center;
+    border-collapse: collapse;
+    border: 3px solid #ddd;
+    width: 100%;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
 tr:nth-child(even){

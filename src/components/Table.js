@@ -6,7 +6,6 @@ function Table() {
   const state = useContext(Context);
 
   const renderTableHeader = () => {
-      console.log(state)
     let tableHeader = Object.keys(state.data[0]);
     return tableHeader.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
@@ -14,6 +13,7 @@ function Table() {
   };
 
   const renderTableData = () => {
+
     return state.data.map((data, index) => {
       const { id, name, city } = data; //destructuring
       return (

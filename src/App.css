@@ -1,9 +1,6 @@
 .App {
   margin: 0 auto;
   text-align: center;
-}
-
-.tableContainer {
-  width: 80%
+  box-sizing: border-box;
 }
 
