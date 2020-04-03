@@ -1,35 +1,21 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {} from 'react';
 import '../App.css';
+import Table from "./Table";
+import Store from "./Store";
 
 function App() {
 
-    const [state, setData] = useState({});
-    const Context = createContext(state);
-
-    async function fetchData() {
-        const res = await fetch("https://recruitment.hal.skygate.io/companies");
-        res
-            .json()
-            .then(res => setData(res))
-            .catch();
-    }
-
-    useEffect(() => {
-        fetchData();
-        console.log(state)
-    });
-
 
     return (
-        <Context.Provider value={state}>
+        <Store>
             <div className="App">
                 <header className="App-header">
                     Table of companies data
                 </header>
+                <Table/>
 
             </div>
-        </Context.Provider>
+        </Store>
     );
 }
-
 export default App;
