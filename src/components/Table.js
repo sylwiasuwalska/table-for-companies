@@ -6,7 +6,7 @@ function Table() {
   const state = useContext(Context);
 
   const renderTableHeader = () => {
-    let tableHeader = Object.keys(state.data[0]);
+    let tableHeader = Object.keys(state[0]);
     return tableHeader.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>;
     });
@@ -14,7 +14,7 @@ function Table() {
 
   const renderTableData = () => {
 
-    return state.data.map((data, index) => {
+    return state.map((data, index) => {
       const { id, name, city } = data; //destructuring
       return (
         <tr key={`row ${id}`}>
@@ -33,7 +33,7 @@ function Table() {
   };
 
     //preventing from render when data is not fetched yet
-    if (!state.data[0]) {
+    if (!state[0]) {
         return <div />
     }
 
