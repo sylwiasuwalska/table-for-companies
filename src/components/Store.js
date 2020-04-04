@@ -8,7 +8,7 @@ const Store = ({ children }) => {
   const [idArray, setIdArray] = useState([]);
   const [totalIncome, setTotalIncome] = useState([]);
   const [averageIncome, setAverageIncome] = useState([]);
-
+  const [lastMonthIncome, setLastMonthIncome] = useState([]);
 
   //data[i].totalIncome = "value3";
   //     data[i].avgIncome = "value3";
@@ -45,30 +45,49 @@ const Store = ({ children }) => {
   useEffect(() => {
     const totalIncomeArray = [];
     const averageIncomeArray = [];
-    const lastMonthIncomeArray =[];
-    for (let i = 0; i < 3; i++) {
+    const lastMonthIncomeArray = [];
+    for (let i = 0; i <= state.length - 1; i++) {
+
       let counter = idArray[i];
+      console.log(idArray.length)
       axios
         .get(`https://recruitment.hal.skygate.io/incomes/${counter}`)
         .then((response) => {
           if (!response.data) {
             return;
           }
-          console.log(response.data.incomes[0].date);
+            setTimeout(function () {}, 500);
+
+          //setting total income
           const totalIncome = Object.values(response.data.incomes).reduce(
             (total, currentValue) => {
-              currentValue = parseInt(currentValue.value);
+              currentValue = parseFloat(currentValue.value);
               return total + currentValue;
             },
             0
           );
-          const averageIncome = Math.round(totalIncome / 12);
 
+          //setting average income
+          const averageIncome = (totalIncome / 12);
+
+          //setting last month income
+          const lastMonthIncome = Object.values(response.data.incomes).reduce(
+            (total, currentValue) => {
+              let date = new Date(currentValue.date);
+              if (date.getMonth() + 1 === 12) {
+                total += parseFloat(currentValue.value);
+              }
+              return total;
+            },
+            0
+          );
 
           totalIncomeArray.push(totalIncome);
           setTotalIncome(totalIncomeArray);
           averageIncomeArray.push(averageIncome);
           setAverageIncome(averageIncomeArray);
+          lastMonthIncomeArray.push(lastMonthIncome);
+          setLastMonthIncome(lastMonthIncomeArray);
         });
     }
   }, [idArray]);
