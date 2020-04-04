@@ -2,7 +2,6 @@ import React, {} from 'react';
 import '../App.css';
 import Store from "./Store";
 import Table from "./Table";
-import DataPrepare from "./DataPrepare";
 
 
 function App() {
