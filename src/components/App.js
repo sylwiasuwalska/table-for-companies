@@ -8,8 +8,8 @@ function App() {
     return (
         <Store>
             <div className="App">
-                <header className="App-header">
-                    Table of companies data
+                <header className="appHeader">
+                    <h1>Companies data</h1>
                 </header>
                 <Table/>
             </div>

@@ -1,29 +1,28 @@
 
 .tableContainer {
     margin: 0 auto;
-    width: 50%
+    width: 80vw;
 }
 
 table {
     text-align: center;
     border-collapse: collapse;
-    border: 3px solid #ddd;
     width: 100%;
 }
 
 th {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
     text-align: center;
-    background-color: #4CAF50;
+    background-color: #1A5276;
     color: white;
 }
 
 th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    border: none;
+    padding: 3vh;
 }
 
-tr:nth-child(even){
-    background-color: #f2f2f2;
+tr:nth-child(odd){
+    background-color:#D6EAF8 ;
 }
