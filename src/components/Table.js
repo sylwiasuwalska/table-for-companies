@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import { Context } from "./Store";
+import { stateContext, loadingContext } from "./Store";
 import "../Table.css";
 
 function Table() {
-  const state = useContext(Context);
+  const state = useContext(stateContext);
+  const loading = useContext(loadingContext);
 
   const renderTableHeader = () => {
     let tableHeader = Object.keys(state[0]);
@@ -13,7 +14,6 @@ function Table() {
   };
 
   const renderTableData = () => {
-
     return state.map((data, index) => {
       const { id, name, city } = data; //destructuring
       return (
@@ -39,6 +39,7 @@ function Table() {
 
   return (
     <div className="tableContainer">
+
       <table id="company-data">
         <tbody>
           <tr>{renderTableHeader()}</tr>
