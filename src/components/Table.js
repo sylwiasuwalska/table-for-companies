@@ -16,12 +16,16 @@ function Table() {
 
   const renderTableData = () => {
     return state.map((data, index) => {
-      const { id, name, city } = data; //destructuring
+      const { id, name, city, totalIncome, avgIncome, lastMonthIncome } = data; //destructuring
       return (
         <tr key={`row ${id}`}>
           <td key={`${id}.${id}`}>{id}</td>
           <td key={`${id}.${name}`}>{name}</td>
           <td key={`${id}.${city}`}>{city}</td>
+          <td key={`${id}.${totalIncome}`}>{totalIncome}</td>
+          <td key={`${id}.${avgIncome}`}>{avgIncome}</td>
+          <td key={`${id}.${lastMonthIncome}`}>{lastMonthIncome}</td>
+
         </tr>
       );
     });

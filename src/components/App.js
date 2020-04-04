@@ -15,9 +15,7 @@ function App() {
                 <header className="App-header">
                     Table of companies data
                 </header>
-                <DataPrepare/>
                 <Table/>
-
             </div>
         </Store>
     );
