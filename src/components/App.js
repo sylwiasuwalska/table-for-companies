@@ -5,9 +5,6 @@ import Table from "./Table";
 
 
 function App() {
-
-
-
     return (
         <Store>
             <div className="App">

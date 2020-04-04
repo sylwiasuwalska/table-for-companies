@@ -44,7 +44,6 @@ const Store = ({children}) => {
         const totalIncomeArray = [];
         const averageIncomeArray = [];
         const lastMonthIncomeArray = [];
-        const incomeStateArray = [];
         for (let i = 0; i <= idArray.length - 1; i++) {
             let counter = idArray[i];
             axios
@@ -80,9 +79,9 @@ const Store = ({children}) => {
                         0
                     );
 
-                    totalIncomeArray.push(totalIncome);
-                    averageIncomeArray.push(averageIncome);
-                    lastMonthIncomeArray.push(lastMonthIncome);
+                    totalIncomeArray.push(totalIncome.toFixed(2));
+                    averageIncomeArray.push(averageIncome.toFixed(2));
+                    lastMonthIncomeArray.push(lastMonthIncome.toFixed(2));
                 });
         }
         //setIncomeState(incomeStateArray);
@@ -99,7 +98,7 @@ const Store = ({children}) => {
             for (let i = 0; i <= copiedState.length - 1; i++) {
 
                 copiedState[i].totalIncome = totalIncome[i];
-                copiedState[i].avgIncome = averageIncome[i];
+                copiedState[i].averageIncome = averageIncome[i];
                 copiedState[i].lastMonthIncome = lastMonthIncome[i];
             }
             setFinalState(copiedState);
