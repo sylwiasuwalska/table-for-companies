@@ -2,9 +2,11 @@ import React, {} from 'react';
 import '../App.css';
 import Store from "./Store";
 import Table from "./Table";
+import DataPrepare from "./DataPrepare";
 
 
 function App() {
+
 
 
     return (
@@ -13,6 +15,7 @@ function App() {
                 <header className="App-header">
                     Table of companies data
                 </header>
+                <DataPrepare/>
                 <Table/>
 
             </div>
