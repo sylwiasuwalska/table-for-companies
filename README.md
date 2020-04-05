@@ -13,6 +13,7 @@ This project builds table for companies data, including: company id, name, city,
 ## Technologies
 Project is created using:
 * ReactJS with Hooks
+* axios
 * npm
 * WebStorm
 
