@@ -29,10 +29,8 @@ function Table() {
 
   useEffect(() => {
     const filterList = () => {
-      console.log("here")
-      console.log(filterWord)
       let filteredData = Object.values(state);
-      filteredData = filteredData.filter(function(data) {
+      filteredData = filteredData.filter((data) => {
         return (
             data.id.toString().search(filterWord.toLowerCase()) !== -1 ||
             data.name.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
@@ -89,9 +87,9 @@ function Table() {
   }
 
   return (
-    <Fragment>
-      You can filter here: <input type="text" placeholder="Filter" onChange={e => setFilterWord(e.target.value)} />
-      <table className="tableContainer">
+    <div className="tableContainer">
+      <div className="filtering">Filter your data here: <input type="text" placeholder="" onChange={e => setFilterWord(e.target.value)} /></div>
+      <table>
         <thead>
           <tr>
             <th>
@@ -134,7 +132,7 @@ function Table() {
         </thead>
         <tbody>{renderTableData()}</tbody>
       </table>
-    </Fragment>
+    </div>
   );
 }
 
