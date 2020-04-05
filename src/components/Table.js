@@ -1,34 +1,30 @@
-import React, {useContext, useEffect, useMemo, useState} from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { stateContext } from "./Store";
 import "../Table.css";
 import loader from "../ring.svg";
 
 function Table() {
-    const state = useContext(stateContext);
-    const [data, setData] = useState(state);
+  const state = useContext(stateContext);
+  const [data, setData] = useState(state);
+  const [sortDirection, setSortDirection] = useState("ascending");
 
+  const sortByField = (field) => {
+    let sortedData = data.slice().sort((a, b) => {
+      if (a[field] < b[field]) {
+        return sortDirection === "ascending" ? -1 : 1;
+      }
+      if (a[field] > b[field]) {
+        return sortDirection === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+    setData(sortedData);
 
+    sortDirection === "ascending" ? setSortDirection("descending") : setSortDirection("ascending");
 
-    // const sorted = useMemo(() => {
-    //     if(!field) return data;
-    //     return data.slice().sort((a, b) => a[field].localeCompare(b[field]));
-    // }, [ data, field]);
-
-
-    const sortByField = (field) => {
-
-        let sortedData = data.slice().sort((a, b) => {
-
-            if(a[field] < b[field]) { return -1; }
-            if(a[field] > b[field]) { return 1; }
-            return 0;
-        });
-        setData(sortedData);
-
-    };
+  };
 
   const renderTableData = () => {
-
     return Object.values(data).map((data, index) => {
       const {
         id,
@@ -52,10 +48,11 @@ function Table() {
     });
   };
 
-  useEffect(()=>{
-      if (state[0]) {
-          setData(state) }
-  },[state])
+  useEffect(() => {
+    if (state[0]) {
+      setData(state);
+    }
+  }, [state]);
 
   //preventing from render when data is not fetched yet
   if (!state[0]) {
@@ -72,25 +69,38 @@ function Table() {
       <thead>
         <tr>
           <th>
-            <button type="button" onClick={() => sortByField('id')}>
+            <button type="button" onClick={() => sortByField("id")}>
               ID
             </button>
           </th>
-          <th><button type="button" onClick={() => sortByField('name')}>
+          <th>
+            <button type="button" onClick={() => sortByField("name")}>
               Name
-          </button></th>
-          <th><button type="button" onClick={() => sortByField('city')}>
+            </button>
+          </th>
+          <th>
+            <button type="button" onClick={() => sortByField("city")}>
               City
-          </button></th>
-          <th><button type="button" onClick={() => sortByField('totalIncome')}>
+            </button>
+          </th>
+          <th>
+            <button type="button" onClick={() => sortByField("totalIncome")}>
               Total Income
-          </button></th>
-          <th><button type="button" onClick={() => sortByField('averageIncome')}>
+            </button>
+          </th>
+          <th>
+            <button type="button" onClick={() => sortByField("averageIncome")}>
               Average Income
-          </button></th>
-          <th><button type="button" onClick={() => sortByField('lastMonthIncome')}>
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
+              onClick={() => sortByField("lastMonthIncome")}
+            >
               Last Month Income
-          </button></th>
+            </button>
+          </th>
         </tr>
       </thead>
       <tbody>{renderTableData()}</tbody>

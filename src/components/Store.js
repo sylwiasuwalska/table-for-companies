@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, {createContext, useEffect, useMemo, useState} from "react";
 import axios from "axios";
 
 const Store = ({ children }) => {
@@ -34,7 +34,7 @@ const Store = ({ children }) => {
     return Object.values(copiedState).map((element) => element.id);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     setIdArray(newIdArray(firstState));
   }, [firstState]);
 
@@ -89,7 +89,7 @@ const Store = ({ children }) => {
     setLastMonthIncome(lastMonthIncomeArray);
   }, [idArray]);
 
-  useEffect(() => {
+  useMemo(() => {
     setTimeout(() => {
       const copiedState = firstState;
 

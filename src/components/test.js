@@ -1,5 +1,6 @@
 const Main = ({ dataProps }) => {
     const [data, setData] = useState(dataProps);
+    const [field, setField] = useState(null);
     const sortById = (field) => {
         let sortedData = data.slice().sort((a, b) => {
             if(a[field] < b[field]) { return -1; }
