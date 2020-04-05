@@ -28,8 +28,16 @@ Project is created using:
 To run this project, install it locally using npm:
 
 ```
-$ cd ../table-for-companies
+# Clone this repository
+$ git clone https://github.com/sylwiasuwalska/table-for-companies
+
+# Go into the repository
+$ cd table-for-companies
+
+# Install dependencies
 $ npm install
+
+# Run the app
 $ npm start
 ```
 
