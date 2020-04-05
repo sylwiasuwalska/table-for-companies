@@ -26,6 +26,7 @@ function Table() {
       ? setSortDirection("descending")
       : setSortDirection("ascending");
   };
+
   useEffect(() => {
     const filterList = () => {
       console.log("here")
@@ -33,8 +34,12 @@ function Table() {
       let filteredData = Object.values(state);
       filteredData = filteredData.filter(function(data) {
         return (
-            data.name.toLowerCase().search(filterWord.toLowerCase()) !==
-            -1
+            data.id.toString().search(filterWord.toLowerCase()) !== -1 ||
+            data.name.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
+            data.city.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
+            data.totalIncome.toString().search(filterWord.toLowerCase()) !== -1 ||
+            data.averageIncome.toString().search(filterWord.toLowerCase()) !== -1 ||
+            data.lastMonthIncome.toString().search(filterWord.toLowerCase()) !== -1
         );
       });
       setData(filteredData);

@@ -101,7 +101,7 @@ const Store = ({ children }) => {
 
       setFinalState(copiedState);
     }, 5000);
-  }, [lastMonthIncome]);
+  }, [totalIncome, averageIncome, lastMonthIncome]);
 
   return (
     <stateContext.Provider value={finalState}>
