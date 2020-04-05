@@ -8,7 +8,7 @@
 ## General info
 This project builds table for companies data, including: company id, name, city, total income, average income and last month income. 
 
-![view_from_screen](./viewScreen.jpg)
+![view_from_screen](./viewScreen.JPG)
 
 ## Technologies
 Project is created using:
@@ -22,7 +22,7 @@ Project is created using:
 * filtering by all fields of table
 * responsive layout for comfortable viewing from smaller devices
 	
-![view_from_screen](./viewMobile.jpg)
+![view_from_screen](./viewMobile.JPG)
 	
 ## Setup
 To run this project, install it locally using npm:
