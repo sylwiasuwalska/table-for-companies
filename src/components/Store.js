@@ -1,9 +1,9 @@
-import React, {createContext, useEffect, useMemo, useState} from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
 const Store = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
 
   const [firstState, setState] = useState({});
   const [finalState, setFinalState] = useState({});
@@ -25,7 +25,7 @@ const Store = ({ children }) => {
       .catch((error) => {
         setLoading(false);
         setState("");
-        setError("Something went wrong");
+        setError(true);
       });
   }, []);
 
@@ -81,6 +81,9 @@ const Store = ({ children }) => {
           totalIncomeArray.push(parseFloat(totalIncome.toFixed(2)));
           averageIncomeArray.push(parseFloat(averageIncome.toFixed(2)));
           lastMonthIncomeArray.push(parseFloat(lastMonthIncome.toFixed(2)));
+        })
+        .catch((error) => {
+            setError(true);
         });
     }
 
@@ -104,14 +107,17 @@ const Store = ({ children }) => {
   }, [totalIncome, averageIncome, lastMonthIncome]);
 
   return (
-    <stateContext.Provider value={finalState}>
-      <loadingContext.Provider value={loading}>
-        {children}
-      </loadingContext.Provider>
-    </stateContext.Provider>
+    <errorContext.Provider value={error}>
+      <stateContext.Provider value={finalState}>
+        <loadingContext.Provider value={loading}>
+          {children}
+        </loadingContext.Provider>
+      </stateContext.Provider>
+    </errorContext.Provider>
   );
 };
 
 export const stateContext = createContext();
 export const loadingContext = createContext();
+export const errorContext = createContext();
 export default Store;

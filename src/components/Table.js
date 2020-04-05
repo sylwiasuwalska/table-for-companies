@@ -1,10 +1,11 @@
 import React, {Fragment, useContext, useEffect, useMemo, useState} from "react";
-import { stateContext } from "./Store";
+import {errorContext, stateContext} from "./Store";
 import "../Table.css";
 import loader from "../ring.svg";
 
 function Table() {
   const state = useContext(stateContext);
+  const error = useContext(errorContext);
   const [data, setData] = useState(state);
   const [sortDirection, setSortDirection] = useState("ascending");
   const [fieldToSort, setFieldToSort] = useState(null);
@@ -82,7 +83,12 @@ function Table() {
     }
   }, [state]);
 
-  //preventing from render when data is not fetched yet
+  //preventing from render when server responds
+  if (error) {
+    return(<div><p>Retrieving data was unsuccessful. Check internet connection.</p></div>)
+  }
+
+  //preventing from render when data is not prepared yet
   if (!state[0]) {
     return (
       <div>
