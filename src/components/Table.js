@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, {Fragment, useContext, useEffect, useMemo, useState} from "react";
 import { stateContext } from "./Store";
 import "../Table.css";
 import loader from "../ring.svg";
@@ -7,6 +7,8 @@ function Table() {
   const state = useContext(stateContext);
   const [data, setData] = useState(state);
   const [sortDirection, setSortDirection] = useState("ascending");
+
+  const [filterWord, setFilterWord] = useState();
 
   const sortByField = (field) => {
     let sortedData = data.slice().sort((a, b) => {
@@ -20,9 +22,26 @@ function Table() {
     });
     setData(sortedData);
 
-    sortDirection === "ascending" ? setSortDirection("descending") : setSortDirection("ascending");
-
+    sortDirection === "ascending"
+      ? setSortDirection("descending")
+      : setSortDirection("ascending");
   };
+  useEffect(() => {
+    const filterList = () => {
+      console.log("here")
+      console.log(filterWord)
+      let filteredData = Object.values(state);
+      filteredData = filteredData.filter(function(data) {
+        return (
+            data.name.toLowerCase().search(filterWord.toLowerCase()) !==
+            -1
+        );
+      });
+      setData(filteredData);
+    }
+    filterList();
+  }, [filterWord])
+
 
   const renderTableData = () => {
     return Object.values(data).map((data, index) => {
@@ -65,46 +84,52 @@ function Table() {
   }
 
   return (
-    <table className="tableContainer">
-      <thead>
-        <tr>
-          <th>
-            <button type="button" onClick={() => sortByField("id")}>
-              ID
-            </button>
-          </th>
-          <th>
-            <button type="button" onClick={() => sortByField("name")}>
-              Name
-            </button>
-          </th>
-          <th>
-            <button type="button" onClick={() => sortByField("city")}>
-              City
-            </button>
-          </th>
-          <th>
-            <button type="button" onClick={() => sortByField("totalIncome")}>
-              Total Income
-            </button>
-          </th>
-          <th>
-            <button type="button" onClick={() => sortByField("averageIncome")}>
-              Average Income
-            </button>
-          </th>
-          <th>
-            <button
-              type="button"
-              onClick={() => sortByField("lastMonthIncome")}
-            >
-              Last Month Income
-            </button>
-          </th>
-        </tr>
-      </thead>
-      <tbody>{renderTableData()}</tbody>
-    </table>
+    <Fragment>
+      You can filter here: <input type="text" placeholder="Filter" onChange={e => setFilterWord(e.target.value)} />
+      <table className="tableContainer">
+        <thead>
+          <tr>
+            <th>
+              <button type="button" onClick={() => sortByField("id")}>
+                ID
+              </button>
+            </th>
+            <th>
+              <button type="button" onClick={() => sortByField("name")}>
+                Name
+              </button>
+            </th>
+            <th>
+              <button type="button" onClick={() => sortByField("city")}>
+                City
+              </button>
+            </th>
+            <th>
+              <button type="button" onClick={() => sortByField("totalIncome")}>
+                Total Income
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => sortByField("averageIncome")}
+              >
+                Average Income
+              </button>
+            </th>
+            <th>
+              <button
+                type="button"
+                onClick={() => sortByField("lastMonthIncome")}
+              >
+                Last Month Income
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>{renderTableData()}</tbody>
+      </table>
+    </Fragment>
   );
 }
 
