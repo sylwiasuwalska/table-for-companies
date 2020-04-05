@@ -35,6 +35,18 @@ button {
   white-space: nowrap;
 }
 
+button.ascending::after {
+  content: '↑';
+  display: inline-block;
+  margin-left: 1em;
+}
+
+button.descending::after {
+  content: '↓';
+  display: inline-block;
+  margin-left: 1em;
+}
+
 tr:nth-child(odd) {
   background-color: #d6eaf8;
 }

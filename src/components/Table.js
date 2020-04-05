@@ -7,10 +7,12 @@ function Table() {
   const state = useContext(stateContext);
   const [data, setData] = useState(state);
   const [sortDirection, setSortDirection] = useState("ascending");
+  const [fieldToSort, setFieldToSort] = useState(null);
 
   const [filterWord, setFilterWord] = useState();
 
   const sortByField = (field) => {
+    setFieldToSort(field);
     let sortedData = data.slice().sort((a, b) => {
       if (a[field] < b[field]) {
         return sortDirection === "ascending" ? -1 : 1;
@@ -26,6 +28,10 @@ function Table() {
       ? setSortDirection("descending")
       : setSortDirection("ascending");
   };
+
+  const getSortIndicator = (field) => {
+    return field === fieldToSort ? sortDirection : undefined;
+  }
 
   useEffect(() => {
     const filterList = () => {
@@ -93,29 +99,29 @@ function Table() {
         <thead>
           <tr>
             <th>
-              <button type="button" onClick={() => sortByField("id")}>
+              <button type="button" onClick={() => sortByField("id")} className={getSortIndicator("id")}>
                 ID
               </button>
             </th>
             <th>
-              <button type="button" onClick={() => sortByField("name")}>
+              <button type="button" onClick={() => sortByField("name")} className={getSortIndicator("name")}>
                 Name
               </button>
             </th>
             <th>
-              <button type="button" onClick={() => sortByField("city")}>
+              <button type="button" onClick={() => sortByField("city")} className={getSortIndicator("city")}>
                 City
               </button>
             </th>
             <th>
-              <button type="button" onClick={() => sortByField("totalIncome")}>
+              <button type="button" onClick={() => sortByField("totalIncome")} className={getSortIndicator("totalIncome")}>
                 Total Income
               </button>
             </th>
             <th>
               <button
                 type="button"
-                onClick={() => sortByField("averageIncome")}
+                onClick={() => sortByField("averageIncome")} className={getSortIndicator("averageIncome")}
               >
                 Average Income
               </button>
@@ -123,7 +129,7 @@ function Table() {
             <th>
               <button
                 type="button"
-                onClick={() => sortByField("lastMonthIncome")}
+                onClick={() => sortByField("lastMonthIncome")} className={getSortIndicator("lastMonthIncome")}
               >
                 Last Month Income
               </button>
