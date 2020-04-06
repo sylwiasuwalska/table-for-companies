@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from "react";
-import {errorContext, stateContext} from "./Store";
+import React, { useContext, useEffect, useState } from "react";
+import { errorContext, stateContext } from "./Store";
 import "../Table.css";
 import loader from "../ring.svg";
 
@@ -7,10 +7,16 @@ function Table() {
   const state = useContext(stateContext);
   const error = useContext(errorContext);
   const [data, setData] = useState(state);
+
   const [sortDirection, setSortDirection] = useState("ascending");
   const [fieldToSort, setFieldToSort] = useState(null);
 
   const [filterWord, setFilterWord] = useState();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+
+  //sorting
 
   const sortByField = (field) => {
     setFieldToSort(field);
@@ -32,25 +38,26 @@ function Table() {
 
   const getSortIndicator = (field) => {
     return field === fieldToSort ? sortDirection : undefined;
-  }
+  };
 
-  useEffect(() => {
-    const filterList = () => {
-      let filteredData = Object.values(state);
-      filteredData = filteredData.filter((data) => {
-        return (
-            data.id.toString().search(filterWord.toLowerCase()) !== -1 ||
-            data.name.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
-            data.city.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
-            data.totalIncome.toString().search(filterWord.toLowerCase()) !== -1 ||
-            data.averageIncome.toString().search(filterWord.toLowerCase()) !== -1 ||
-            data.lastMonthIncome.toString().search(filterWord.toLowerCase()) !== -1
-        );
-      });
-      setData(filteredData);
-    }
-    filterList();
-  }, [filterWord])
+  //filtering
+
+  const filterList = (array) => {
+    let filteredData = Object.values(array);
+    filteredData = filteredData.filter((data) => {
+      return (
+          data.id.toString().search(filterWord.toLowerCase()) !== -1 ||
+          data.name.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
+          data.city.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
+          data.totalIncome.toString().search(filterWord.toLowerCase()) !== -1 ||
+          data.averageIncome.toString().search(filterWord.toLowerCase()) !==
+          -1 ||
+          data.lastMonthIncome.toString().search(filterWord.toLowerCase()) !==
+          -1
+      );
+    });
+    setData(filteredData);
+  };
 
 
   const renderTableData = () => {
@@ -78,14 +85,22 @@ function Table() {
   };
 
   useEffect(() => {
+    filterList(state);
+  }, [filterWord]);
+
+  useEffect(() => {
     if (state[0]) {
       setData(state);
     }
   }, [state]);
 
-  //preventing from render when server responds
+  //preventing from render when server doesn't respond
   if (error) {
-    return(<div><p>Retrieving data was unsuccessful. Check internet connection.</p></div>)
+    return (
+      <div>
+        <p>Retrieving data was unsuccessful. Check internet connection.</p>
+      </div>
+    );
   }
 
   //preventing from render when data is not prepared yet
@@ -100,34 +115,58 @@ function Table() {
 
   return (
     <div className="tableContainer">
-      <div className="filtering">Filter your data here: <input type="text" placeholder="" onChange={e => setFilterWord(e.target.value)} /></div>
+      <div className="filtering">
+        Filter your data here:{" "}
+        <input
+          type="text"
+          placeholder=""
+          onChange={(e) => setFilterWord(e.target.value)}
+        />
+      </div>
       <table>
         <thead>
           <tr>
             <th>
-              <button type="button" onClick={() => sortByField("id")} className={getSortIndicator("id")}>
+              <button
+                type="button"
+                onClick={() => sortByField("id")}
+                className={getSortIndicator("id")}
+              >
                 ID
               </button>
             </th>
             <th>
-              <button type="button" onClick={() => sortByField("name")} className={getSortIndicator("name")}>
+              <button
+                type="button"
+                onClick={() => sortByField("name")}
+                className={getSortIndicator("name")}
+              >
                 Name
               </button>
             </th>
             <th>
-              <button type="button" onClick={() => sortByField("city")} className={getSortIndicator("city")}>
+              <button
+                type="button"
+                onClick={() => sortByField("city")}
+                className={getSortIndicator("city")}
+              >
                 City
               </button>
             </th>
             <th>
-              <button type="button" onClick={() => sortByField("totalIncome")} className={getSortIndicator("totalIncome")}>
+              <button
+                type="button"
+                onClick={() => sortByField("totalIncome")}
+                className={getSortIndicator("totalIncome")}
+              >
                 Total Income
               </button>
             </th>
             <th>
               <button
                 type="button"
-                onClick={() => sortByField("averageIncome")} className={getSortIndicator("averageIncome")}
+                onClick={() => sortByField("averageIncome")}
+                className={getSortIndicator("averageIncome")}
               >
                 Average Income
               </button>
@@ -135,7 +174,8 @@ function Table() {
             <th>
               <button
                 type="button"
-                onClick={() => sortByField("lastMonthIncome")} className={getSortIndicator("lastMonthIncome")}
+                onClick={() => sortByField("lastMonthIncome")}
+                className={getSortIndicator("lastMonthIncome")}
               >
                 Last Month Income
               </button>
