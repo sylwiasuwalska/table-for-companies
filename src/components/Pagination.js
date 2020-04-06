@@ -18,7 +18,7 @@ function Pagination({ rowsPerPage, totalRows, paginate, currentPage }) {
       {pageNumbers.map((number) => (
         <a
           key={number}
-          href="!#"
+          href="javascript:;"
           onClick={() => paginate(number)}
           className={getPageIndicator(number)}
         >
