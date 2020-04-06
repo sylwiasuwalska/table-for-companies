@@ -12,10 +12,9 @@ This project builds table for companies data, including: company id, name, city,
 
 ## Technologies
 Project is created using:
-* ReactJS with Hooks
+* ReactJS 16.13.1 with Hooks
 * axios
 * npm
-* WebStorm
 
 ## Features
 * displaying data fetched from APIs
@@ -32,8 +31,7 @@ To run this project, install it locally using npm:
 # Clone this repository
 $ git clone https://github.com/sylwiasuwalska/table-for-companies
 
-# Go into the repository
-$ cd table-for-companies
+# Go into the repository directory
 
 # Install dependencies
 $ npm install
