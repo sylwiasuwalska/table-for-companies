@@ -16,7 +16,7 @@ function Table() {
   const [filterWord, setFilterWord] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(15);
 
   //sorting
 
