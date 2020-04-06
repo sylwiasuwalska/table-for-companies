@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { errorContext, stateContext } from "./Store";
+import {dataPrepareContext, errorContext, stateContext} from "./Store";
 import Pagination from "./Pagination";
 import "../Table.css";
 import loader from "../ring.svg";
@@ -8,6 +8,8 @@ import Filtering from "./Filtering";
 function Table() {
   const state = useContext(stateContext);
   const error = useContext(errorContext);
+  const dataPrepare = useContext(dataPrepareContext)
+
   const [data, setData] = useState(state);
 
   const [sortDirection, setSortDirection] = useState("ascending");
@@ -110,7 +112,7 @@ function Table() {
   }
 
   //preventing from render when data is not prepared yet
-  if (!state[0]) {
+  if (dataPrepare) {
     return (
       <div>
         <img src={loader} alt="ball" height="100px" width="100px" />

@@ -14,6 +14,8 @@ const Store = ({children}) => {
     const [averageIncome, setAverageIncome] = useState([]);
     const [lastMonthIncome, setLastMonthIncome] = useState([]);
 
+    const [dataPreparing, setDataPreparing] = useState(true);
+
     useEffect(() => {
         axios
             .get("https://recruitment.hal.skygate.io/companies")
@@ -66,13 +68,12 @@ const Store = ({children}) => {
                     //setting last month income
                     const lastMonthIncome = Object.values(response.data.incomes).reduce(
                         (total, currentValue) => {
-
                             //setting dates to sum last month income
                             const date = new Date(currentValue.date);
                             const dateMonth = date.getMonth() + 1;
                             const dateYear = date.getFullYear();
 
-                            if ((todayMonth - dateMonth === 3) && (todayYear === dateYear)) {
+                            if (todayMonth - dateMonth === 3 && todayYear === dateYear) {
                                 total += parseFloat(currentValue.value);
                             }
                             return total;
@@ -104,26 +105,31 @@ const Store = ({children}) => {
     }, [idArray]);
 
     useEffect(() => {
-        setTimeout(() => {
-            const copiedState = firstState;
+        // setTimeout(() => {
+        //
+        // }, 4000);
+        const copiedState = firstState;
 
-            for (let i = 0; i <= copiedState.length - 1; i++) {
-                copiedState[i].totalIncome = totalIncome[i];
-                copiedState[i].averageIncome = averageIncome[i];
-                copiedState[i].lastMonthIncome = lastMonthIncome[i];
-            }
+        for (let i = 0; i <= copiedState.length - 1; i++) {
+            copiedState[i].totalIncome = totalIncome[i];
+            copiedState[i].averageIncome = averageIncome[i];
+            copiedState[i].lastMonthIncome = lastMonthIncome[i];
+        }
 
-            setFinalState(copiedState);
-        }, 4000);
+        setFinalState(copiedState);
+            setDataPreparing(false);
+
     }, [totalIncome, averageIncome, lastMonthIncome]);
 
     return (
         <errorContext.Provider value={error}>
-            <stateContext.Provider value={finalState}>
-                <loadingContext.Provider value={loading}>
-                    {children}
-                </loadingContext.Provider>
-            </stateContext.Provider>
+            <dataPrepareContext.Provider value={dataPreparing}>
+                <stateContext.Provider value={finalState}>
+                    <loadingContext.Provider value={loading}>
+                        {children}
+                    </loadingContext.Provider>
+                </stateContext.Provider>
+            </dataPrepareContext.Provider>
         </errorContext.Provider>
     );
 };
@@ -131,4 +137,5 @@ const Store = ({children}) => {
 export const stateContext = createContext();
 export const loadingContext = createContext();
 export const errorContext = createContext();
+export const dataPrepareContext = createContext();
 export default Store;
