@@ -42,5 +42,5 @@ $ npm install
 $ npm start
 ```
 
-##Sources
+## Sources
 * loading indicator comes from https://loading.io/

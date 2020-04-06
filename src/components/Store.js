@@ -1,127 +1,131 @@
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import React, {createContext, useEffect, useMemo, useState} from "react";
 import axios from "axios";
 
-const Store = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+const Store = ({children}) => {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
-  const [firstState, setState] = useState({});
-  const [finalState, setFinalState] = useState({});
+    const [firstState, setState] = useState({});
+    const [finalState, setFinalState] = useState({});
 
-  const [idArray, setIdArray] = useState([]);
+    const [idArray, setIdArray] = useState([]);
 
-  const [totalIncome, setTotalIncome] = useState([]);
-  const [averageIncome, setAverageIncome] = useState([]);
-  const [lastMonthIncome, setLastMonthIncome] = useState([]);
+    const [totalIncome, setTotalIncome] = useState([]);
+    const [averageIncome, setAverageIncome] = useState([]);
+    const [lastMonthIncome, setLastMonthIncome] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("https://recruitment.hal.skygate.io/companies")
-      .then((response) => {
-        setLoading(false);
-        setState(response.data);
-        setError("");
-      })
-      .catch((error) => {
-        setLoading(false);
-        setState("");
-        setError(true);
-      });
-  }, []);
+    useEffect(() => {
+        axios
+            .get("https://recruitment.hal.skygate.io/companies")
+            .then((response) => {
+                setLoading(false);
+                setState(response.data);
+                setError("");
+            })
+            .catch((error) => {
+                setLoading(false);
+                setState("");
+                setError(true);
+            });
+    }, []);
 
-  const newIdArray = (array) => {
-    return Object.values(array).map((element) => element.id);
-  };
+    const newIdArray = (array) => {
+        return Object.values(array).map((element) => element.id);
+    };
 
-  const incomeDataFetch = () => {
-    const totalIncomeArray = [];
-    const averageIncomeArray = [];
-    const lastMonthIncomeArray = [];
-    if (!idArray[0]) { return ;}
-    for (let i = 0; i <= idArray.length-1; i++) {
-      let counter = idArray[i];
-      console.log(i + "przed "+ counter)
-      axios
-        .get(`https://recruitment.hal.skygate.io/incomes/${counter}`)
-        .then((response) => {
-          if (!response.data) {
+    const incomeDataFetch = () => {
+        const totalIncomeArray = [];
+        const averageIncomeArray = [];
+        const lastMonthIncomeArray = [];
+        const todayDate = new Date();
+        const todayMonth = todayDate.getMonth() + 1;
+        const todayYear = todayDate.getFullYear();
+        if (!idArray[0]) {
             return;
-          }
-            console.log(i + "po1 "+ counter)
-          //setting total income
-          let totalIncome = 0;
-          totalIncome = Object.values(response.data.incomes).reduce(
-            (total, currentValue) => {
-              currentValue = parseFloat(currentValue.value);
-              return total + currentValue;
-            },
-            0
-          );
+        }
+        for (let i = 0; i <= idArray.length - 1; i++) {
+            let counter = idArray[i];
+            axios
+                .get(`https://recruitment.hal.skygate.io/incomes/${counter}`)
+                .then((response) => {
+                    if (!response.data) {
+                        return;
+                    }
+                    //setting total income
+                    const totalIncome = Object.values(response.data.incomes).reduce(
+                        (total, currentValue) => {
+                            currentValue = parseFloat(currentValue.value);
+                            return total + currentValue;
+                        },
+                        0
+                    );
 
-          //setting average income
-          let averageIncome = 0;
-          averageIncome = totalIncome / 12;
+                    //setting average income
+                    const averageIncome = totalIncome / 12;
 
-          //setting last month income
-          let lastMonthIncome = 0;
-          lastMonthIncome = Object.values(response.data.incomes).reduce(
-            (total, currentValue) => {
-              let date = new Date(currentValue.date);
-              if (date.getMonth() + 1 === 12) {
-                total += parseFloat(currentValue.value);
-              }
-              return total;
-            },
-            0
-          );
-            console.log(i + "po3 "+ counter)
-          totalIncomeArray[i] = (parseFloat(totalIncome.toFixed(2)));
-          averageIncomeArray[i] = (parseFloat(averageIncome.toFixed(2)));
-          lastMonthIncomeArray[i] = (parseFloat(lastMonthIncome.toFixed(2)));
-        })
-        .catch((error) => {
-          setError(true);
-        });
-    }
+                    //setting last month income
+                    const lastMonthIncome = Object.values(response.data.incomes).reduce(
+                        (total, currentValue) => {
 
-    setTotalIncome(totalIncomeArray);
-    setAverageIncome(averageIncomeArray);
-    setLastMonthIncome(lastMonthIncomeArray);
-  };
+                            //setting dates to sum last month income
+                            const date = new Date(currentValue.date);
+                            const dateMonth = date.getMonth() + 1;
+                            const dateYear = date.getFullYear();
 
-  useMemo(() => {
-    setIdArray(newIdArray(firstState));
-  }, [firstState]);
+                            if ((todayMonth - dateMonth === 3) && (todayYear === dateYear)) {
+                                total += parseFloat(currentValue.value);
+                            }
+                            return total;
+                        },
+                        0
+                    );
+                    totalIncomeArray[i] = parseFloat(totalIncome.toFixed(2));
+                    averageIncomeArray[i] = parseFloat(averageIncome.toFixed(2));
+                    lastMonthIncomeArray[i] = parseFloat(lastMonthIncome.toFixed(2));
+                })
+                .catch((error) => {
+                    setError(true);
+                });
+        }
 
-  //based on array of ids, setting income information
+        setTotalIncome(totalIncomeArray);
+        setAverageIncome(averageIncomeArray);
+        setLastMonthIncome(lastMonthIncomeArray);
+    };
+
+    useMemo(() => {
+        setIdArray(newIdArray(firstState));
+    }, [firstState]);
+
+    //based on array of ids, setting income information
 
     useEffect(() => {
         incomeDataFetch();
-    }, [idArray])
+    }, [idArray]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      const copiedState = firstState;
+    useEffect(() => {
+        setTimeout(() => {
+            const copiedState = firstState;
 
-      for (let i = 0; i <= copiedState.length - 1; i++) {
-        copiedState[i].totalIncome = totalIncome[i];
-        copiedState[i].averageIncome = averageIncome[i];
-        copiedState[i].lastMonthIncome = lastMonthIncome[i];
-      }
+            for (let i = 0; i <= copiedState.length - 1; i++) {
+                copiedState[i].totalIncome = totalIncome[i];
+                copiedState[i].averageIncome = averageIncome[i];
+                copiedState[i].lastMonthIncome = lastMonthIncome[i];
+            }
 
-      setFinalState(copiedState);
-    }, 2500);
-  }, [totalIncome, averageIncome, lastMonthIncome]);
+            setFinalState(copiedState);
+        }, 4000);
+    }, [totalIncome, averageIncome, lastMonthIncome]);
 
-  return (
-    <errorContext.Provider value={error}>
-      <stateContext.Provider value={finalState}>
-        <loadingContext.Provider value={loading}>
-          {children}
-        </loadingContext.Provider>
-      </stateContext.Provider>
-    </errorContext.Provider>
-  );
+    return (
+        <errorContext.Provider value={error}>
+            <stateContext.Provider value={finalState}>
+                <loadingContext.Provider value={loading}>
+                    {children}
+                </loadingContext.Provider>
+            </stateContext.Provider>
+        </errorContext.Provider>
+    );
 };
 
 export const stateContext = createContext();
