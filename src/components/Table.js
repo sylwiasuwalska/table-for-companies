@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { errorContext, stateContext } from "./Store";
 import Pagination from "./Pagination";
 import "../Table.css";
@@ -16,7 +16,7 @@ function Table() {
   const [filterWord, setFilterWord] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(15);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
 
   //sorting
 
@@ -120,77 +120,83 @@ function Table() {
   }
 
   return (
-    <div className="tableContainer">
-      <Filtering setFilterWord={setFilterWord} setCurrentPage={setCurrentPage} />
-      <Pagination
-        rowsPerPage={rowsPerPage}
-        totalRows={data.length}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
-
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <button
-                type="button"
-                onClick={() => sortByField("id")}
-                className={getSortIndicator("id")}
-              >
-                ID
-              </button>
-            </th>
-            <th>
-              <button
-                type="button"
-                onClick={() => sortByField("name")}
-                className={getSortIndicator("name")}
-              >
-                Name
-              </button>
-            </th>
-            <th>
-              <button
-                type="button"
-                onClick={() => sortByField("city")}
-                className={getSortIndicator("city")}
-              >
-                City
-              </button>
-            </th>
-            <th>
-              <button
-                type="button"
-                onClick={() => sortByField("totalIncome")}
-                className={getSortIndicator("totalIncome")}
-              >
-                Total Income
-              </button>
-            </th>
-            <th>
-              <button
-                type="button"
-                onClick={() => sortByField("averageIncome")}
-                className={getSortIndicator("averageIncome")}
-              >
-                Average Income
-              </button>
-            </th>
-            <th>
-              <button
-                type="button"
-                onClick={() => sortByField("lastMonthIncome")}
-                className={getSortIndicator("lastMonthIncome")}
-              >
-                Last Month Income
-              </button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>{renderTableData()}</tbody>
-      </table>
-    </div>
+    <Fragment>
+      <div className="tableContainer">
+        <div>
+          <Filtering
+            setFilterWord={setFilterWord}
+            setCurrentPage={setCurrentPage}
+          />
+          <Pagination
+            rowsPerPage={rowsPerPage}
+            totalRows={data.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <button
+                  type="button"
+                  onClick={() => sortByField("id")}
+                  className={getSortIndicator("id")}
+                >
+                  ID
+                </button>
+              </th>
+              <th>
+                <button
+                  type="button"
+                  onClick={() => sortByField("name")}
+                  className={getSortIndicator("name")}
+                >
+                  Name
+                </button>
+              </th>
+              <th>
+                <button
+                  type="button"
+                  onClick={() => sortByField("city")}
+                  className={getSortIndicator("city")}
+                >
+                  City
+                </button>
+              </th>
+              <th>
+                <button
+                  type="button"
+                  onClick={() => sortByField("totalIncome")}
+                  className={getSortIndicator("totalIncome")}
+                >
+                  Total Income
+                </button>
+              </th>
+              <th>
+                <button
+                  type="button"
+                  onClick={() => sortByField("averageIncome")}
+                  className={getSortIndicator("averageIncome")}
+                >
+                  Average Income
+                </button>
+              </th>
+              <th>
+                <button
+                  type="button"
+                  onClick={() => sortByField("lastMonthIncome")}
+                  className={getSortIndicator("lastMonthIncome")}
+                >
+                  Last Month Income
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>{renderTableData()}</tbody>
+        </table>
+      </div>
+    </Fragment>
   );
 }
 

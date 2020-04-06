@@ -1,9 +1,8 @@
 .tableContainer {
   margin: 0 auto;
-  padding-bottom: 3vh;
   width: 80vw;
+  padding-bottom: 3vh;
 }
-
 
 table {
   display: table;
@@ -14,12 +13,13 @@ table {
 }
 
 td {
-  padding: 2vh;
+  padding: 1vh;
 }
 
 th {
   padding: 0;
 }
+
 button {
   border: none;
   background-color: #1a5276;
@@ -33,15 +33,15 @@ button {
 }
 
 button.ascending::after {
-  content: '↑';
+  content: "↑";
   display: inline-block;
-  margin-left: 1em;
+  padding-left: 1em;
 }
 
 button.descending::after {
-  content: '↓';
+  content: "↓";
   display: inline-block;
-  margin-left: 1em;
+  padding-left: 1em;
 }
 
 tr:nth-child(odd) {
@@ -50,7 +50,7 @@ tr:nth-child(odd) {
 
 @media only screen and (max-width: 760px),
   (min-device-width: 768px) and (max-device-width: 1024px) {
-  /* Force table to not be like tables anymore */
+
   table,
   thead,
   tbody,
@@ -58,41 +58,29 @@ tr:nth-child(odd) {
   td,
   tr {
     display: block;
-    font-size: 1rem;
   }
 
-  /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
+  thead tr button {
+    border: 1px solid #fff;
   }
 
-  tr {
-    border: 1px solid #ccc;
-    padding: 0;
+  table tr {
+    border-bottom: 3px solid #1a5276;
+    display: block;
+    margin-bottom: 5px;
   }
 
-  td {
-    /* Behave  like a "row" */
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding: 0;
-    padding-left: 50%;
+  table td {
+    border-bottom: 1px solid #1a5276;
+    display: block;
+    font-size: .8em;
+    text-align: right;
   }
 
-  td:before {
-    /* Now like a table header */
-    position: absolute;
-    /* Top/left values mimic padding */
-    top: 0;
-    left: 0;
-    width: 45%;
-    white-space: nowrap;
-    height: 100%;
-    background-color: #1a5276;
-    color: white;
+  table td::before {
+
+    float: left;
+
   }
 
   /*

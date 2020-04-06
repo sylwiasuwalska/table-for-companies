@@ -12,12 +12,13 @@ function Pagination({ rowsPerPage, totalRows, paginate, currentPage }) {
   };
 
   return (
-      <div className="pagination"> <p>Page:</p>
+      <div className="pagination"> <p>Page:</p> <div className="paginateButtons">
       {pageNumbers.map((number) => (
         <a key={number} href="!#" onClick={()=> paginate(number)} className={getPageIndicator(number)}>
           {number}
         </a>
       ))}
+      </div>
     </div>
   );
 }

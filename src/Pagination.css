@@ -10,6 +10,10 @@
     margin: 8px;
 }
 
+.paginateButtons{
+    display: inline-block;
+}
+
 .pagination a {
     color: black;
     float: left;
@@ -23,3 +27,20 @@
 }
 
 .pagination a:hover:not(.active) {background-color: #d6eaf8;}
+
+
+@media only screen  and (max-width : 1130px) {
+
+    .pagination {
+        display: block;
+        float: left;
+    }
+
+    .pagination a {
+        padding: 5px 5px;
+    }
+
+    .pagination p {
+        margin: 5px;
+    }
+}
