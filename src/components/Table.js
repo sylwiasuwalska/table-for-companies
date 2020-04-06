@@ -3,6 +3,7 @@ import { errorContext, stateContext } from "./Store";
 import Pagination from "./Pagination";
 import "../Table.css";
 import loader from "../ring.svg";
+import Filtering from "./Filtering";
 
 function Table() {
   const state = useContext(stateContext);
@@ -15,7 +16,7 @@ function Table() {
   const [filterWord, setFilterWord] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(20)
+  const [rowsPerPage, setRowsPerPage] = useState(20);
 
   //sorting
 
@@ -47,21 +48,18 @@ function Table() {
     let filteredData = Object.values(array);
     filteredData = filteredData.filter((data) => {
       return (
-          data.id.toString().search(filterWord.toLowerCase()) !== -1 ||
-          data.name.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
-          data.city.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
-          data.totalIncome.toString().search(filterWord.toLowerCase()) !== -1 ||
-          data.averageIncome.toString().search(filterWord.toLowerCase()) !==
-          -1 ||
-          data.lastMonthIncome.toString().search(filterWord.toLowerCase()) !==
-          -1
+        data.id.toString().search(filterWord.toLowerCase()) !== -1 ||
+        data.name.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
+        data.city.toLowerCase().search(filterWord.toLowerCase()) !== -1 ||
+        data.totalIncome.toString().search(filterWord.toLowerCase()) !== -1 ||
+        data.averageIncome.toString().search(filterWord.toLowerCase()) !== -1 ||
+        data.lastMonthIncome.toString().search(filterWord.toLowerCase()) !== -1
       );
     });
     setData(filteredData);
   };
 
-
-  const paginate =  pageNumber =>  setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const renderTableData = () => {
     //pagination
@@ -123,15 +121,12 @@ function Table() {
 
   return (
     <div className="tableContainer">
-      <div className="filtering">
-        Filter your data here:{" "}
-        <input
-          type="text"
-          placeholder=""
-          onChange={(e) => setFilterWord(e.target.value)}
-        />
-        <Pagination rowsPerPage={rowsPerPage} totalRows={data.length} paginate={paginate}/>
-      </div>
+      <Filtering setFilterWord={setFilterWord} setCurrentPage={setCurrentPage} />
+      <Pagination
+        rowsPerPage={rowsPerPage}
+        totalRows={data.length}
+        paginate={paginate}
+      />
 
       <table>
         <thead>

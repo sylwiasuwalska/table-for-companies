@@ -7,7 +7,7 @@ function Pagination({ rowsPerPage, totalRows, paginate }) {
     pageNumbers.push(i);
   }
   return (
-    <div className="pagination">
+      <div className="pagination"> <p>Page:</p>
       {pageNumbers.map((number) => (
         <a key={number} href="!#" onClick={()=> paginate(number)}>
           {number}
