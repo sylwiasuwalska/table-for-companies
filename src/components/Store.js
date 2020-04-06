@@ -30,32 +30,27 @@ const Store = ({ children }) => {
   }, []);
 
   const newIdArray = (array) => {
-    let copiedState = array;
-    return Object.values(copiedState).map((element) => element.id);
+    return Object.values(array).map((element) => element.id);
   };
 
-  useMemo(() => {
-    setIdArray(newIdArray(firstState));
-  }, [firstState]);
-
-  //based on array of ids, setting income information
-
-  useEffect(() => {
+  const incomeDataFetch = () => {
     const totalIncomeArray = [];
     const averageIncomeArray = [];
     const lastMonthIncomeArray = [];
-    for (let i = 0; i <= idArray.length - 1; i++) {
+    if (!idArray[0]) { return ;}
+    for (let i = 0; i <= idArray.length-1; i++) {
       let counter = idArray[i];
+      console.log(i + "przed "+ counter)
       axios
         .get(`https://recruitment.hal.skygate.io/incomes/${counter}`)
         .then((response) => {
           if (!response.data) {
-            console.log("here");
             return;
           }
-
+            console.log(i + "po1 "+ counter)
           //setting total income
-          const totalIncome = Object.values(response.data.incomes).reduce(
+          let totalIncome = 0;
+          totalIncome = Object.values(response.data.incomes).reduce(
             (total, currentValue) => {
               currentValue = parseFloat(currentValue.value);
               return total + currentValue;
@@ -64,10 +59,12 @@ const Store = ({ children }) => {
           );
 
           //setting average income
-          const averageIncome = totalIncome / 12;
+          let averageIncome = 0;
+          averageIncome = totalIncome / 12;
 
           //setting last month income
-          const lastMonthIncome = Object.values(response.data.incomes).reduce(
+          let lastMonthIncome = 0;
+          lastMonthIncome = Object.values(response.data.incomes).reduce(
             (total, currentValue) => {
               let date = new Date(currentValue.date);
               if (date.getMonth() + 1 === 12) {
@@ -77,22 +74,32 @@ const Store = ({ children }) => {
             },
             0
           );
-
-          totalIncomeArray.push(parseFloat(totalIncome.toFixed(2)));
-          averageIncomeArray.push(parseFloat(averageIncome.toFixed(2)));
-          lastMonthIncomeArray.push(parseFloat(lastMonthIncome.toFixed(2)));
+            console.log(i + "po3 "+ counter)
+          totalIncomeArray[i] = (parseFloat(totalIncome.toFixed(2)));
+          averageIncomeArray[i] = (parseFloat(averageIncome.toFixed(2)));
+          lastMonthIncomeArray[i] = (parseFloat(lastMonthIncome.toFixed(2)));
         })
         .catch((error) => {
-            setError(true);
+          setError(true);
         });
     }
 
     setTotalIncome(totalIncomeArray);
     setAverageIncome(averageIncomeArray);
     setLastMonthIncome(lastMonthIncomeArray);
-  }, [idArray]);
+  };
 
   useMemo(() => {
+    setIdArray(newIdArray(firstState));
+  }, [firstState]);
+
+  //based on array of ids, setting income information
+
+    useEffect(() => {
+        incomeDataFetch();
+    }, [idArray])
+
+  useEffect(() => {
     setTimeout(() => {
       const copiedState = firstState;
 
@@ -103,7 +110,7 @@ const Store = ({ children }) => {
       }
 
       setFinalState(copiedState);
-    }, 5000);
+    }, 2500);
   }, [totalIncome, averageIncome, lastMonthIncome]);
 
   return (

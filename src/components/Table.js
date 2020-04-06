@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useEffect, useMemo, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {errorContext, stateContext} from "./Store";
 import "../Table.css";
 import loader from "../ring.svg";
