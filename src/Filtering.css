@@ -1,0 +1,10 @@
+.filtering {
+    display: inline-block;
+    padding-bottom: 2vh;
+    float: left;
+    margin: 0;
+}
+
+.filtering p {
+    display: inline-block;
+}

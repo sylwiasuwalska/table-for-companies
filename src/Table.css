@@ -1,12 +1,9 @@
 .tableContainer {
   margin: 0 auto;
+  padding-bottom: 3vh;
   width: 80vw;
 }
 
-.filtering {
-  padding-bottom: 3vh;
-  text-align: left;
-}
 
 table {
   display: table;

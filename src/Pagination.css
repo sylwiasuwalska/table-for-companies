@@ -1,13 +1,18 @@
 .pagination {
     display: inline-block;
+    padding-bottom: 2vh;
     float: right;
-    padding-bottom: 3vh;
+}
+
+.pagination p {
+    float: left;
+    display: inline-block;
 }
 
 .pagination a {
     color: black;
     float: left;
-    padding: 8px 8px;
+    padding: 16px 8px;
     text-decoration: none;
 }
 
