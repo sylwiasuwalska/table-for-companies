@@ -130,9 +130,9 @@ function Table() {
           placeholder=""
           onChange={(e) => setFilterWord(e.target.value)}
         />
-
+        <Pagination rowsPerPage={rowsPerPage} totalRows={data.length} paginate={paginate}/>
       </div>
-      <Pagination rowsPerPage={rowsPerPage} totalRows={data.length} paginate={paginate}/>
+
       <table>
         <thead>
           <tr>

@@ -1,6 +1,7 @@
 .pagination {
     display: inline-block;
-    text-align: left;
+    float: right;
+    padding-bottom: 3vh;
 }
 
 .pagination a {
