@@ -10,10 +10,6 @@
     margin: 8px;
 }
 
-.paginateButtons{
-    display: inline-block;
-}
-
 .pagination a {
     color: black;
     float: left;

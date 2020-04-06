@@ -129,7 +129,7 @@ function Table() {
           />
           <Pagination
             rowsPerPage={rowsPerPage}
-            totalRows={data.length}
+            totalRows={state.length}
             paginate={paginate}
             currentPage={currentPage}
           />
