@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { errorContext, stateContext } from "./Store";
+import Pagination from "./Pagination";
 import "../Table.css";
 import loader from "../ring.svg";
 
@@ -14,7 +15,7 @@ function Table() {
   const [filterWord, setFilterWord] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(20)
 
   //sorting
 
@@ -60,8 +61,15 @@ function Table() {
   };
 
 
+  const paginate =  pageNumber =>  setCurrentPage(pageNumber);
+
   const renderTableData = () => {
-    return Object.values(data).map((data, index) => {
+    //pagination
+    const indexOfLastRow = currentPage * rowsPerPage;
+    const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+    const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
+
+    return Object.values(currentRows).map((data, index) => {
       const {
         id,
         name,
@@ -122,7 +130,9 @@ function Table() {
           placeholder=""
           onChange={(e) => setFilterWord(e.target.value)}
         />
+
       </div>
+      <Pagination rowsPerPage={rowsPerPage} totalRows={data.length} paginate={paginate}/>
       <table>
         <thead>
           <tr>
