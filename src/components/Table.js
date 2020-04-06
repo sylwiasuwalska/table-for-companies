@@ -126,6 +126,7 @@ function Table() {
         rowsPerPage={rowsPerPage}
         totalRows={data.length}
         paginate={paginate}
+        currentPage={currentPage}
       />
 
       <table>
