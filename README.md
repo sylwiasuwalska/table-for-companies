@@ -41,4 +41,4 @@ $ npm start
 ```
 
 ## Sources
-* loading indicator comes from https://loading.io/
+* loading spinner comes from https://loading.io/
