@@ -10,7 +10,7 @@
     margin: 8px;
 }
 
-@media only screen  and (max-width : 1130px)  {
+@media only screen  and (max-width: 1130px) {
     .filtering {
         display: block;
         float: left;

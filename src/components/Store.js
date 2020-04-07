@@ -9,7 +9,6 @@ const Store = ({children}) => {
     const [finalState, setFinalState] = useState({});
 
 
-
     useEffect(() => {
         axios
             .get("https://recruitment.hal.skygate.io/companies")
@@ -25,7 +24,7 @@ const Store = ({children}) => {
             .then((data) => {
                 incomeDataFetch(data[0], data[1]);
             })
-            .catch((error) => {
+            .catch(() => {
                 setLoading(false);
                 setFinalState("");
                 setError(true);
@@ -86,7 +85,7 @@ const Store = ({children}) => {
                         lastMonthIncome.toFixed(2)
                     );
                 })
-                .catch((error) => {
+                .catch(() => {
                     setError(true);
                 });
         }

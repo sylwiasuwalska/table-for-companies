@@ -1,107 +1,112 @@
 .tableContainer {
-  margin: 0 auto;
-  width: 80vw;
-  padding-bottom: 3vh;
+    margin: 0 auto;
+    width: 80vw;
+    padding-bottom: 3vh;
 }
 
 table {
-  display: table;
-  text-align: center;
-  border-collapse: collapse;
-  width: 100%;
-  border-bottom: 2px solid #1a5276;
+    display: table;
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+    border-bottom: 2px solid #1a5276;
 }
 
 td {
-  padding: 1vh;
+    padding: 1vh;
 }
 
 th {
-  padding: 0;
+    padding: 0;
 }
 
 button {
-  border: none;
-  background-color: #1a5276;
-  padding: 2vh;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  color: white;
-  font-size: 1em;
-  white-space: nowrap;
+    border: none;
+    background-color: #1a5276;
+    padding: 2vh;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 1em;
+    white-space: nowrap;
 }
 
 button.ascending::after {
-  content: "↑";
-  display: inline-block;
-  padding-left: 1em;
+    content: "↑";
+    display: inline-block;
+    padding-left: 1em;
 }
 
 button.descending::after {
-  content: "↓";
-  display: inline-block;
-  padding-left: 1em;
+    content: "↓";
+    display: inline-block;
+    padding-left: 1em;
 }
 
 tr:nth-child(odd) {
-  background-color: #d6eaf8;
+    background-color: #d6eaf8;
 }
 
 @media only screen and (max-width: 760px),
-  (min-device-width: 768px) and (max-device-width: 1024px) {
+(min-device-width: 768px) and (max-device-width: 1024px) {
 
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
-    display: block;
-  }
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
 
-  thead tr button {
-    border: 1px solid #fff;
-  }
+    thead tr button {
+        border: 1px solid #fff;
+    }
 
-  table tr {
-    border-bottom: 3px solid #1a5276;
-    display: block;
-    margin-bottom: 5px;
-  }
+    table tr {
+        border-bottom: 3px solid #1a5276;
+        display: block;
+        margin-bottom: 5px;
+    }
 
-  table td {
-    border-bottom: 1px solid #1a5276;
-    display: block;
-    font-size: .8em;
-    text-align: right;
-  }
+    table td {
+        border-bottom: 1px solid #1a5276;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
 
-  table td::before {
+    table td::before {
 
-    float: left;
+        float: left;
 
-  }
+    }
 
-  /*
-    Label the data
-    */
-  td:nth-of-type(1):before {
-    content: "ID";
-  }
-  td:nth-of-type(2):before {
-    content: "Name";
-  }
-  td:nth-of-type(3):before {
-    content: "City";
-  }
-  td:nth-of-type(4):before {
-    content: "Total Income";
-  }
-  td:nth-of-type(5):before {
-    content: "Average Income";
-  }
-  td:nth-of-type(6):before {
-    content: "Last Month Income";
-  }
+    /*
+      Label the data
+      */
+    td:nth-of-type(1):before {
+        content: "ID";
+    }
+
+    td:nth-of-type(2):before {
+        content: "Name";
+    }
+
+    td:nth-of-type(3):before {
+        content: "City";
+    }
+
+    td:nth-of-type(4):before {
+        content: "Total Income";
+    }
+
+    td:nth-of-type(5):before {
+        content: "Average Income";
+    }
+
+    td:nth-of-type(6):before {
+        content: "Last Month Income";
+    }
 }
