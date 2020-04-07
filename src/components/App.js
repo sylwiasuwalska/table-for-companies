@@ -9,7 +9,7 @@ function App() {
         <Store>
             <div className="App">
                 <header className="appHeader">
-                    <h1>Companies data</h1>
+                    <h1>Table of data</h1>
                 </header>
                 <Table/>
             </div>

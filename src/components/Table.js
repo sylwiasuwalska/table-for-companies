@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import {dataPrepareContext, errorContext, stateContext} from "./Store";
+import {errorContext, stateContext} from "./Store";
 import Pagination from "./Pagination";
 import "../Table.css";
 import loader from "../ring.svg";
@@ -8,7 +8,6 @@ import Filtering from "./Filtering";
 function Table() {
   const state = useContext(stateContext);
   const error = useContext(errorContext);
-  const dataPrepare = useContext(dataPrepareContext)
 
   const [data, setData] = useState(state);
 
@@ -18,7 +17,7 @@ function Table() {
   const [filterWord, setFilterWord] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage] = useState(20);
 
   //sorting
 
@@ -112,7 +111,7 @@ function Table() {
   }
 
   //preventing from render when data is not prepared yet
-  if (dataPrepare) {
+  if (!state[0]) {
     return (
       <div>
         <img src={loader} alt="ball" height="100px" width="100px" />
